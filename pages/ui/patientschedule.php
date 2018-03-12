@@ -16,10 +16,6 @@ $found = checkschedule($checkdate, $checkday);
      }
  }                                                                  
                                                     
-
-                                        
-
-
 ?>
 
     <html>
