@@ -1,4 +1,6 @@
-<?php require '../session.php'; ?>
+<?php require '../session.php'; 
+
+?>
 <html>
     
     <head>
@@ -32,12 +34,15 @@
     </head>
     <body>
             <?php 
+                 ini_set('display_errors', 0);
                 date_default_timezone_set('Asia/Manila');
                 $pname = '';
                 $from = '';
                 $from = $_POST['reportdate1']; //required
                 $to = empty($_POST['reportdate2']) ? date('Y-m-d') : $_POST['reportdate2'];
                 $pname = $_POST['patientid']; 
+        
+                require '../queries/report_filter_query.php';
             ?>
         
             <?php 
@@ -55,7 +60,7 @@
             ?>
                 
              <?php if(isset($_POST['dialysisdetail1'])){ ?>
-                    
+               
                   <?php if(empty($_POST['patientid'])){ ?>
             
                   <div id="printableArea">
@@ -461,7 +466,27 @@
         
         <?php if(isset($_POST['dialysisdetail3'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
-             <div id="printableArea">
+       <div class="row clearfix">
+           <form target="" class="form-horizontal page-content" form method="POST" action="dialysissummaryreport.php">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <label for="">Filter Illness & Operation</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin: 0px 0px 0px -40px">
+                                                    
+                                        <select class="show-tick" data-live-search="true" name="dialysisdetail3" id="patientid" title="&nbsp" onchange="this.form.submit()">
+                                            <option selected hidden> -- select an option -- </option>
+                                            <option value=""> ALL </option>
+                                            <option value="hpn"> HPN </option>
+                                            <option value="ptb"> PTB </option>
+                                            <option value="dm"> DM </option>
+                                            <option value="cancer"> CANCER </option>
+                                            <option value="asthma"> ASTHMA </option> 
+                                            </select>   
+                                                        </div>
+           </form>  
+                                            </div>
+       
+        <div id="printableArea">
                         
                             <div class="body">
                             
@@ -487,7 +512,7 @@
                                                 </div>
                                                 <div class="body">
                                                     <div class="table-responsive">
-                                                        <table class="table table-bordered table-striped table-hover js-basic-example">
+                                                         <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Hospital ID</th>
@@ -497,10 +522,9 @@
                                                             </thead>
                                                             <tbody>
                                                         <?php
-                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
-                                                           $query = $conn->query("Select `patientprofile`.`Hospital_Id`,`diagnostic/examination`.`DM`, `diagnostic/examination`.`HPN`,`diagnostic/examination`.`PTB`,`diagnostic/examination`.`Cancer`,`diagnostic/examination`.`Asthma`,`diagnostic/examination`.`PIO_others`,`patientprofile`.`P_Lname`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname` FROM `patientprofile` INNER JOIN `diagnostic/examination` ON `diagnostic/examination`.`Hospital_Id` = `patientprofile`.`Hospital_Id` WHERE `diagnostic/examination`.`date` BETWEEN '$from' AND '$to' GROUP BY `diagnostic/examination`.`date`") or die(mysqli_error());
+                                                           
                                                         
-                                                           while($fetch = $query ->fetch_array()){
+                                                           while($fetch = $query3 ->fetch_array()){
                                                         ?>
                                                                    <tr>
                                                                         <td>

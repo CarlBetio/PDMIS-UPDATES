@@ -11,7 +11,6 @@
                                                    Dialysis Reports
                                                     <a href=""><i class="material-icons pull-right" data-dismiss="modal">clear</i></a>
                                                 </h2>
-
                                             </div>
                                             <div class="body">
                                                 <form target="_blank" class="form-horizontal page-content" form method="POST" action="print/dialysissummaryreport.php">
@@ -24,7 +23,6 @@
                                                                 <div class="form-line">
                                                                     <input type="date" class="form-control unstyled" name="reportdate1" id="reportdate1" value="" style="padding-right:0">
                                                                 </div>
-                                                           
                                                         </div>
                                                          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 form-control-label">
                                                             <label for="email_address_2">To</label>
@@ -33,7 +31,6 @@
                                                                 <div class="form-line">
                                                                     <input type="date" class="form-control unstyled" name="reportdate2" id="reportdate2" value="" style="padding-right:0">
                                                                 </div>
-                                                     
                                                         </div>
 
                                                     </div>
