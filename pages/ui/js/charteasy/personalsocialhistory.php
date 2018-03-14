@@ -40,7 +40,7 @@ $fetch5a = $hys1->fetch_array();
 			}, 
 			data: [ 
 				{ 
-					type: "pie", 
+					type: "doughnut", 
 					showInLegend: true, 
 					toolTipContent: "{label} <br/> {y}", 
 					indexLabel: "{y}", 

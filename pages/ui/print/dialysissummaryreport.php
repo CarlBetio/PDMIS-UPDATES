@@ -463,6 +463,197 @@
         <?php }?>       
         <?php } ?>
         
+            <?php if(isset($_POST['schedule'])){ ?>
+         <?php if(empty($_POST['patientid'])){ ?>
+             <div id="printableArea">
+                        
+                            <div class="body">
+                            
+                                    <div class="row clearfix">
+                                         <div class="col-lg-12 col-md-12 center">
+                                        <center>
+                                        <h4>TERESITA L. JALANDONI PROVINCIAL HOSPITAL</h4>
+                                        <h5>Rizal St, Silay City, Neg. Occ.</h5>
+                                        <h5>Tel. No. 495-1704 / 495-1705 / 495-0096</h5>
+                                        <h4>HEMODIALYSIS PATIENT SCHEDULE STATUS RECORD</h4>
+                                        </center>
+                                        </div>
+                                </div>
+                                        
+                                           <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header bg-indigo">
+                                                    <h4>
+                                                        <b>List of Patients</b>
+                                                    </h4>
+
+                                                </div>
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-striped table-hover js-basic-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Day</th>
+                                                                    <th>Time</th>
+                                                                    <th>Name</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                        <?php
+                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
+                                                           $query = $conn->query("Select `patientschedule_log`.`patientschedule_date`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname`,`patientprofile`.`P_Lname`,`patientschedule_log`.`patientschedule_day`,`patientschedule_log`.`patientschedule_time`,`patientschedule_log`.`patientschedule_status` FROM `patientschedule_log` INNER JOIN `patientprofile` ON `patientschedule_log`.`Hospital_Id` = `patientprofile`.`Hospital_Id` WHERE `patientschedule_log`.`patientschedule_date` BETWEEN '$from' AND '$to'") or die(mysqli_error());
+                                                        
+                                                           while($fetch = $query ->fetch_array()){
+                                                        ?>
+                                                                   <tr>
+
+                                                                        <td>
+                                                                            <?php echo $fetch['patientschedule_date']?>
+                                                                        </td>
+                                                                           <td>
+                                                                            <?php echo $fetch['patientschedule_day']?>
+                                                                        </td>
+                                                                       <td>
+                                                                            <?php echo $fetch['patientschedule_time']?>
+                                                                        </td>
+                                                                      <td>
+                                                                            <?php echo $fetch['P_Fname']. " " .$fetch['P_Mname']. " " .$fetch['P_Lname']?>
+                                                                        </td>
+                                                                      <td>
+                                                                            <?php  if($fetch['patientschedule_status'] == '1')echo "Present"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '2')echo "Absent"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '3')echo "Cancelled"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '4')echo "Rescheduled"?>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <?php
+                                                           }
+
+                                                        ?>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <?php if($from != ''){?>
+                                <b>Date: <u><?php echo $from." - ".$to?></u></b><br>
+                                <?php } ?>
+                                <b>Produced By: <u><?php echo $name ?></u></b>
+                           
+                            </div>
+                                   <div class="row clearfix">
+                                            <div class="col-lg-offset-10 col-xs-offset-10">
+                                               <div class="row hidden-print mt-20">
+                                                 
+                                                   <a class="btn btn-primary btn-xs" onclick="printDiv('printableArea')" target="_blank"><i class="material-icons">print</i> Print</a>
+                                                
+                                                   
+                                              </div>
+                                         </div>
+                                    </div>
+                    
+                         </div>
+            <?php }else{ ?>
+            <div id="printableArea">
+                        
+                            <div class="body">
+                            
+                                    <div class="row clearfix">
+                                         <div class="col-lg-12 col-md-12 center">
+                                        <center>
+                                        <h4>TERESITA L. JALANDONI PROVINCIAL HOSPITAL</h4>
+                                        <h5>Rizal St, Silay City, Neg. Occ.</h5>
+                                        <h5>Tel. No. 495-1704 / 495-1705 / 495-0096</h5>
+                                        <h4>HEMODIALYSIS PATIENT WEIGHT SUMMARY RECORD</h4>
+                                        </center>
+                                        </div>
+                                    </div>
+                                        <div class="header bg-indigo">
+                                                    <h4><br><br>
+                                                        <p>Hospital ID: <?php echo $fetchp['Hospital_Id']?><br>
+                                                        Patient Name: <?php echo $fetchp['P_Fname']." ".$fetchp['P_Mname']." ".$fetchp['P_Lname'] ?></p>
+                                                    </h4>
+                                                </div>
+                                           <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                
+                                                <div class="body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered table-striped table-hover js-basic-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Day</th>
+                                                                    <th>Time</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                        <?php
+                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
+                                                           $query = $conn->query("Select `patientschedule_log`.`patientschedule_date`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname`,`patientprofile`.`P_Lname`,`patientschedule_log`.`patientschedule_day`,`patientschedule_log`.`patientschedule_time`,`patientschedule_log`.`patientschedule_status` FROM `patientschedule_log` INNER JOIN `patientprofile` ON `patientschedule_log`.`Hospital_Id` = `patientprofile`.`Hospital_Id` WHERE `patientschedule_log`.`patientschedule_date` BETWEEN '$from' AND '$to' AND `patientschedule_log`.`Hospital_Id` = '$pname'") or die(mysqli_error());
+                                                        
+                                                           while($fetch = $query ->fetch_array()){
+                                                        ?>
+                                                                     <tr>
+
+                                                                        <td>
+                                                                            <?php echo $fetch['patientschedule_date']?>
+                                                                        </td>
+                                                                           <td>
+                                                                            <?php echo $fetch['patientschedule_day']?>
+                                                                        </td>
+                                                                       <td>
+                                                                            <?php echo $fetch['patientschedule_time']?>
+                                                                        </td>
+                                                                      <td>
+                                                                            <?php  if($fetch['patientschedule_status'] == '1')echo "Present"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '2')echo "Absent"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '3')echo "Cancelled"?>
+                                                                          <?php  if($fetch['patientschedule_status'] == '4')echo "Rescheduled"?>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <?php
+                                                           }
+                                                        ?>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  <?php if($from != ''){?>
+                                <b>Date: <u><?php echo $from." - ".$to?></u></b><br>
+                                <?php } ?>
+                                <b>Produced By: <u><?php echo $name ?></u></b>
+                           
+                            </div>
+                                   <div class="row clearfix">
+                                            <div class="col-lg-offset-10 col-xs-offset-10">
+                                               <div class="row hidden-print mt-20">
+                                                 
+                                                   <a class="btn btn-primary btn-xs" onclick="printDiv('printableArea')" target="_blank"><i class="material-icons">print</i> Print</a>
+                                                
+                                                   
+                                              </div>
+                                         </div>
+                                    </div>
+                    
+                         </div>
+        <?php }?>       
+        <?php } ?>
+        
+        
+        
         
         <?php if(isset($_POST['dialysisdetail3'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
@@ -481,6 +672,7 @@
                                             <option value="dm"> DM </option>
                                             <option value="cancer"> CANCER </option>
                                             <option value="asthma"> ASTHMA </option> 
+                                            <option value="PIO_others"> OTHERS </option>
                                             </select>   
                                                         </div>
            </form>  
@@ -661,6 +853,25 @@
         
         <?php if(isset($_POST['dialysisdetail4'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
+            <div class="row clearfix">
+           <form target="" class="form-horizontal page-content" form method="POST" action="dialysissummaryreport.php">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <label for="">Filter Personal/Social History</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin: 0px 0px 0px -35px">
+                                                    
+                                        <select class="show-tick" data-live-search="true" name="dialysisdetail4" id="patientid" title="&nbsp" onchange="this.form.submit()">
+                                            <option selected hidden> -- select an option -- </option>
+                                            <option value=""> ALL </option>
+                                            <option value="Alcoholintake"> ALCOHOL INTAKE </option>
+                                            <option value="SmokingHistory"> SMOKING HISTORY</option>
+                                            <option value="DrugAllergy"> DRUG ALLERGY </option>
+                                            <option value="FoodAllergy"> FOOD ALLLERGY </option>
+                                            <option value="PSH_others"> OTHERS </option> 
+                                            </select>   
+                                                        </div>
+           </form>  
+                                            </div>
              <div id="printableArea">
                         
                             <div class="body">
@@ -697,10 +908,7 @@
                                                             </thead>    
                                                             <tbody>
                                                         <?php
-                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
-                                                           $query = $conn->query("Select `patientprofile`.`Hospital_Id`,`diagnostic/examination`.`Alcoholintake`, `diagnostic/examination`.`SmokingHistory`,`diagnostic/examination`.`DrugAllergy`,`diagnostic/examination`.`FoodAllergy`,`diagnostic/examination`.`PSH_others`,`patientprofile`.`P_Lname`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname` FROM `patientprofile` INNER JOIN `diagnostic/examination` ON `diagnostic/examination`.`Hospital_Id` = `patientprofile`.`Hospital_Id` WHERE `diagnostic/examination`.`date` BETWEEN '$from' AND '$to' GROUP BY `diagnostic/examination`.`date`") or die(mysqli_error());
-                                                        
-                                                           while($fetch = $query ->fetch_array()){
+                                                           while($fetch = $query4 ->fetch_array()){
                                                         ?>
                                                                    <tr>
                                                                         <td>
@@ -835,6 +1043,24 @@
         
          <?php if(isset($_POST['dialysisdetail5'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
+         <div class="row clearfix">
+           <form target="" class="form-horizontal page-content" form method="POST" action="dialysissummaryreport.php">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <label for="">Filter ESRD Causes</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin: 0px 0px 0px -55px">
+                                                    
+                                        <select class="show-tick" data-live-search="true" name="dialysisdetail5" id="patientid" title="&nbsp" onchange="this.form.submit()">
+                                            <option selected hidden> -- select an option -- </option>
+                                            <option value=""> ALL </option>
+                                            <option value="esrd_diabetic"> DIABETIC </option>
+                                            <option value="esrd_chronic"> CHRONIC </option>
+                                            <option value="esrd_hypertensive"> HYPERTENSIVE </option>
+                                            <option value="esrd_others"> OTHERS </option>
+                                            </select>   
+                                                        </div>
+           </form>  
+                                            </div>
              <div id="printableArea">
                         
                             <div class="body">
@@ -869,10 +1095,8 @@
                                                             </thead>    
                                                             <tbody>
                                                         <?php
-                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
-                                                           $query = $conn->query("SELECT `hemo_order`.`esrd_diabetic`, `hemo_order`.`esrd_chronic`, `hemo_order`.`esrd_hypertensive`, `hemo_order`.`esrd_others`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname`,`patientprofile`.`P_Lname`,`patientprofile`.`Hospital_Id` FROM `hemo_order` INNER JOIN `patientprofile` ON `patientprofile`.`Hospital_Id` = `hemo_order`.`Hospital_id`  WHERE `hemo_order`.`order_date` BETWEEN '$from' AND '$to' GROUP BY `hemo_order`.`order_date`") or die(mysqli_error());
-                                                                            
-                                                           while($fetch = $query ->fetch_array()){
+                                                                          
+                                                           while($fetch = $query5 ->fetch_array()){
                                                         ?>
                                                                    <tr>
                                                                         <td>
@@ -1003,6 +1227,24 @@
         <?php }?>
            <?php if(isset($_POST['dialysisdetail6'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
+         <div class="row clearfix">
+           <form target="" class="form-horizontal page-content" form method="POST" action="dialysissummaryreport.php">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <label for="">Filter ESRD Causes</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin: 0px 0px 0px -55px">
+                                                    
+                                        <select class="show-tick" data-live-search="true" name="dialysisdetail6" id="patientid" title="&nbsp" onchange="this.form.submit()">
+                                            <option selected hidden> -- select an option -- </option>
+                                            <option value=""> ALL </option>
+                                            <option value="0"> Dialysis Catheter </option>
+                                            <option value="1"> Subclavian </option>
+                                            <option value="2"> Internal Jugular </option>
+                                            <option value="3"> Femoral </option>
+                                            </select>   
+                                                        </div>
+           </form>  
+                                            </div>
              <div id="printableArea">
                         
                             <div class="body">
@@ -1036,11 +1278,8 @@
                                                                 </tr>
                                                             </thead>    
                                                             <tbody>
-                                                        <?php
-                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
-                                                           $query = $conn->query("SELECT `hemo_order`.`access`,`patientprofile`.`P_Fname`,`patientprofile`.`P_Mname`,`patientprofile`.`P_Lname`,`patientprofile`.`Hospital_Id` FROM `hemo_order` INNER JOIN `patientprofile` ON `patientprofile`.`Hospital_Id` = `hemo_order`.`Hospital_id`  WHERE `hemo_order`.`order_date` BETWEEN '$from' AND '$to' GROUP BY `hemo_order`.`order_date`") or die(mysqli_error());
-                                                                            
-                                                           while($fetch = $query ->fetch_array()){
+                                                        <?php              
+                                                           while($fetch = $query6 ->fetch_array()){
                                                         ?>
                                                                    <tr>
                                                                         <td>
@@ -1525,6 +1764,22 @@
             <?php } ?>  
           <?php if(isset($_POST['dialysisdetail8'])){ ?>
          <?php if(empty($_POST['patientid'])){ ?>
+         <div class="row clearfix">
+           <form target="" class="form-horizontal page-content" form method="POST" action="dialysissummaryreport.php">
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                                    <label for="">Filter ESRD Causes</label>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="margin: 0px 0px 0px -55px">
+                                                    
+                                        <select class="show-tick" data-live-search="true" name="dialysisdetail8" id="patientid" title="&nbsp" onchange="this.form.submit()">
+                                            <option selected hidden> -- select an option -- </option>
+                                            <option value=""> ALL </option>
+                                            <option value="1"> ACTIVE </option>
+                                            <option value="0"> INACTIVE </option>
+                                            </select>   
+                                                        </div>
+           </form>  
+                                            </div>
              <div id="printableArea">
                         
                             <div class="body">
@@ -1558,11 +1813,8 @@
                                                             </thead>    
                                                             <tbody>
                                                         <?php
-                                                        
-                                                            $conn = new mysqli("localhost", "root", "", "PDMIS") or die(mysqli_error());
-                                                           $query = $conn->query("SELECT `P_Lname`,`P_Mname`,`P_Fname`,`P_Status` FROM `patientprofile` WHERE `P_Date` BETWEEN '$from' AND '$to'") or die(mysqli_error());
-                                                                            
-                                                           while($fetch = $query ->fetch_array()){
+             
+                                                           while($fetch = $query8 ->fetch_array()){
                                                               
                                                         ?>
                                                                    <tr>

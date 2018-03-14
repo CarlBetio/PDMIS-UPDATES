@@ -39,7 +39,7 @@ $fetch4 = $hy->fetch_array();
 			}, 
 			data: [ 
 				{ 
-					type: "pie", 
+					type: "line", 
 					showInLegend: true, 
 					toolTipContent: "{label} <br/> {y}", 
 					indexLabel: "{y}", 
